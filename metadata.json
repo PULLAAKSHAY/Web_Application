@@ -1,0 +1,5 @@
+{
+  "name": "3-Tier Smart Notes",
+  "description": "A simple 3-tier web application demonstration using React for the presentation layer, Gemini API as the application layer, and browser localStorage as the data layer. Users can create, view, and delete notes, and generate AI-powered insights for each note.",
+  "requestFramePermissions": []
+}

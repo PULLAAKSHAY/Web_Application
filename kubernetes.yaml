@@ -1,0 +1,49 @@
+# API Version for the Deployment resource
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # Name of the deployment
+  name: smart-notes-deployment
+  labels:
+    app: smart-notes
+spec:
+  # Number of desired replicas (pods)
+  replicas: 2
+  selector:
+    # Selector to match pods controlled by this deployment
+    matchLabels:
+      app: smart-notes
+  template:
+    metadata:
+      # Labels applied to each pod created by this deployment
+      labels:
+        app: smart-notes
+    spec:
+      containers:
+        - name: smart-notes-container
+          # IMPORTANT: Replace this with the actual path to your container image in a registry
+          # e.g., gcr.io/your-project/smart-notes:v1.0.0
+          image: your-docker-registry/smart-notes-app:latest
+          # The port your application container is listening on
+          ports:
+            - containerPort: 80
+---
+# API Version for the Service resource
+apiVersion: v1
+kind: Service
+metadata:
+  # Name of the service
+  name: smart-notes-service
+spec:
+  # Exposes the service on a static port on each node's IP.
+  # For cloud providers, this often provisions an external load balancer.
+  type: LoadBalancer
+  selector:
+    # Selector to find the pods to route traffic to
+    app: smart-notes
+  ports:
+    - protocol: TCP
+      # The port on the Load Balancer that forwards traffic
+      port: 80
+      # The port on the pods that traffic is forwarded to
+      targetPort: 80
